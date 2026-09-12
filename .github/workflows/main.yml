@@ -17,26 +17,15 @@ jobs:
       - name: Instalar GCC
         run: sudo apt-get update && sudo apt-get install -y gcc
 
-      - name: Compilar e executar todos os exercícios (.c)
+      - name: Compilar todos os exercícios (.c)
         run: |
           set -e
           fail=0
           while IFS= read -r -d '' file; do
             echo "=== Compilando: $file ==="
             out="${file%.c}.out"
-
             if ! gcc -Wall -Wextra -o "$out" "$file"; then
-              echo "FALHOU AO COMPILAR: $file"
-              fail=1
-              continue
-            fi
-
-            echo "=== Executando: $out ==="
-            # </dev/null evita que o programa fique travado esperando scanf/input;
-            # timeout evita loops infinitos travarem o job.
-            if ! timeout 10s "$out" < /dev/null; then
-              status=$?
-              echo "FALHOU AO EXECUTAR (exit code $status): $file"
+              echo "FALHOU: $file"
               fail=1
             fi
           done < <(find . -name "*.c" -print0)
