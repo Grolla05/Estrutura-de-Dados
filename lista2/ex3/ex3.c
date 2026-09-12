@@ -1,25 +1,32 @@
-//Cálculo de fatorial com função recursiva
+// Cálculo de fatorial com função recursiva
 #include <stdio.h>
-double fatorial(int n);//protótipo da função fatorial
 
-int main(void){
+// protótipo da função fatorial
+double fatorial(int n);
+
+int main(void)
+{
   int numero;
   double f;
   printf("Digite o numero que deseja calcular o fatorial: ");
-  scanf("%d",&numero);
-  f = fatorial(numero);  //chamada da função fatorial
-  printf("Fatorial de %d = %.0lf\n ",numero,f);
+  scanf("%d", &numero);
+  f = fatorial(numero); // chamada da função fatorial
+  printf("Fatorial de %d = %.0lf\n ", numero, f);
   return 0;
 }
 
-//Função recursiva que calcula o fatorial de um número inteiro n
-double fatorial(int n){
+// Função recursiva que calcula o fatorial de um número inteiro n
+double fatorial(int n)
+{
   double vfat;
-  if (n <= 1){//Caso base: fatorial de n <= 1 retorna 1
-    return(1);
-  }else{
-    //Chamada recursiva
-    vfat = n*fatorial(n-1);
+  if (n <= 1)
+  { // Caso base: fatorial de n <= 1 retorna 1
+    return (1);
+  }
+  else
+  {
+    // Chamada recursiva
+    vfat = n * fatorial(n - 1);
     return (vfat);
   }
 }
