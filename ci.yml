@@ -1,0 +1,32 @@
+name: CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do repositório
+        uses: actions/checkout@v4
+
+      - name: Instalar GCC
+        run: sudo apt-get update && sudo apt-get install -y gcc
+
+      - name: Compilar todos os exercícios (.c)
+        run: |
+          set -e
+          fail=0
+          while IFS= read -r -d '' file; do
+            echo "=== Compilando: $file ==="
+            out="${file%.c}.out"
+            if ! gcc -Wall -Wextra -o "$out" "$file"; then
+              echo "FALHOU: $file"
+              fail=1
+            fi
+          done < <(find . -name "*.c" -print0)
+          exit $fail
